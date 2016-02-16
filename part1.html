@@ -23,9 +23,28 @@ function preload() {
     game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
 
 }
+var platforms;
 
 function create() {
-	game.add.sprite(0,0, 'star' );
+// Arcade Physics system
+game.physics.startSystem(Phaser.Physics.ARCADE);
+// background
+game.add.sprite(0,0, 'sky');
+// platfroms ground, legedes
+platforms = game.add.group();
+//  enable physics for any object created in platforms group
+platforms.enableBody = true;
+//  create ground platforms
+var ground = platforms.create(0, game.world.height - 64, 'ground');
+// Scale ground to fit
+ground.scale.setTo(2,2);
+// this stops it from  falling away when jumped on
+ground.body.immovable = true;
+//two ledges
+var ledge = platforms.create(400,400, 'ground')
+ledge.body.immovable = true;
+ledge = platforms.create(-150, 250, 'ground');
+ledge.body.immovable = true;
 }
 
 function update() {
